@@ -36,3 +36,17 @@ function selectQuestion() {
   })
   
   $("#start-timer").on("click", () => startTimer(5));
+
+$("#button1").text(currentQuestion.answers.a).on("click", function() {
+    if (timerCounter > 0) {
+        timerCounter -= timerPenalty;
+        updatePageTimer();
+    }
+});
+
+selectQuestion();
+console.log(currentQuestion);
+displayQuestion(currentQuestion.question);
+
+// TODO: create buttons
+// TODO: functionize wrong answers
