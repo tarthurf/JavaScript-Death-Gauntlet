@@ -33,7 +33,7 @@ function startTimer(timeLimit) {
 
 
 $("#button2").on("click", function() {
-  displayRandomQuestion();
+  displayQuestion();
 })
 
 $("#start-timer").on("click", () => startTimer(5));
