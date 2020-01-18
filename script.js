@@ -30,3 +30,9 @@ function displayQuestion(question) {
 function selectQuestion() {
     currentQuestion = myQuestions.splice(randomUpToMax(myQuestions.length), 1).pop();
   }
+
+  $("#button2").on("click", function() {
+    displayRandomQuestion();
+  })
+  
+  $("#start-timer").on("click", () => startTimer(5));
