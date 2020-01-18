@@ -18,3 +18,15 @@ function startTimer(timeLimit) {
       }
     }, 1000);
   }
+
+function updatePageTimer() {
+    $("#timer").text(timerCounter);
+}
+
+function displayQuestion(question) {
+	$("#questions").text(question);
+}
+
+function selectQuestion() {
+    currentQuestion = myQuestions.splice(randomUpToMax(myQuestions.length), 1).pop();
+  }
