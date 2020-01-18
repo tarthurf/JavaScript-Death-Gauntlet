@@ -41,6 +41,7 @@ $("#start-timer").on("click", () => startTimer(5));
 selectQuestion();
 console.log(currentQuestion);
 displayQuestion(currentQuestion.question);
+
 $("#button1").text(currentQuestion.answers.a).on("click", function() {
   if (timerCounter > 0) {
     timerCounter -= timerPenalty;
