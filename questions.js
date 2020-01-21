@@ -2,29 +2,34 @@ const myQuestions = [
     {
       question: "Who is the strongest?",
       answers: {
-        a: "Superman",
-        b: "The Terminator",
-        c: "Waluigi, obviously"
+        1: "Superman",
+        2: "The Terminator",
+        3: "Waluigi, obviously",
+        4: "All of the above",
+        5: "None of the above"
       },
-      correctAnswer: "c"
+      correctAnswer: 3
     },
     {
       question: "What is the best site ever created?",
       answers: {
-        a: "SitePoint",
-        b: "Simple Steps Code",
-        c: "Trick question; they're both the best"
+        1: "SitePoint",
+        2: "Simple Steps Code",
+        3: "Trick question; they're both the best",
+        4: "All of the above",
+        5: "None of the above"
       },
-      correctAnswer: "c"
+      correctAnswer: 3
     },
     {
       question: "Where is Waldo really?",
       answers: {
-        a: "Antarctica",
-        b: "Exploring the Pacific Ocean",
-        c: "Sitting in a tree",
-        d: "Minding his own business, so stop asking"
+        1: "Antarctica",
+        2: "Exploring the Pacific Ocean",
+        3: "Minding his own business, so stop asking",
+        4: "All of the above",
+        5: "None of the above"
       },
-      correctAnswer: "d"
+      correctAnswer: 3
     }
   ];
