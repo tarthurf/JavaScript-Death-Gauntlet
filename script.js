@@ -24,6 +24,21 @@ function displayQuestion(element) {
 	$(element).text(currentQuestion.question);
 }
 
+// this function will add any number of buttons to an element in HTML
+function addButtons(parentEl, x) {
+  for (let i = 0; i < x; i++) {
+    const newButton = $('<button>').attr({id:"button" + (i+1)});
+    $(parentEl).append(newButton);
+  }
+}
+// addButtons("#answer-buttons", 5);
+
+function deleteElementsFromParent(parentEl, x) {
+  for (let i = 0; i < x; i++) {
+    $(parentEl).empty();
+  }
+}
+
 // this function adds buttons with specific answers on them
 function displayAnswerButtons(element, x) {
   for (let i = 0; i < x; i++) {
