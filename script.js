@@ -1,16 +1,18 @@
 let timerCounter;
 const timerPenalty = 1;
+let waitForUserInput;
 
 let selectedQuestions = [];
 let currentQuestion = {};
+let questionsAnsweredCorrectly = 0;
 
 function randomUpToMax(max) {
   return Math.floor(Math.random() * max);
 }
 
 // This function updates a the timer on the page
-function updatePageTimer() {
-  $("#timer").text(timerCounter);
+function updateElementText(element, textUpdate) {
+  $(element).text(textUpdate);
 }
 
 // this function will start a timer
@@ -21,6 +23,8 @@ function startTimer(timeLimit) {
     timerCounter--;
     if (timerCounter <= 0) {
       clearInterval(timer);
+      $("#timer").hide();
+      displayResults();
     }
   }, 1000);
 }
@@ -44,7 +48,7 @@ function addButtons(parentEl, x) {
 }
 
 // this function adds buttons with specific answers on them
-function displayAnswerButtons(element, x) {
+function displayButtons(element, x) {
   for (let i = 0; i < x; i++) {
     const buttonNumber = (i + 1);
     const buttonNumberToString = buttonNumber.toString();
@@ -59,7 +63,7 @@ function setAnswerValues(element, x) {
     const buttonNumber = (i + 1);
     const buttonNumberToString = buttonNumber.toString();
     if (objectKeyArray[i] === currentQuestion.correctAnswer) {
-      $(element + buttonNumberToString).attr({value: true, onclick: startNextQuestion()})
+      $(element + buttonNumberToString).attr("value", true)
     }
     else {
       $(element + buttonNumberToString).attr("value", false)
@@ -67,79 +71,70 @@ function setAnswerValues(element, x) {
   }
 }
 
-// TODO: create function that will start a new set of questions to display
-// use setTimeout() = to timerCounter * 1000 while user is choosing a question
-// When user selects the correct question this function runs, starting with clearTimeout()
-// load next question
-// reset setTimeout() to = current timerCounter
-function startNextQuestion() {
-
-}
-
 // function that moves current question to selected question array
-function changeToNextQuestion() {
+function grabNextQuestion() {
   selectedQuestions.push(currentQuestion);
   currentQuestion = {}
+  selectQuestion()
 }
 
 function deleteElementsFromParent(parentEl) {
   $(parentEl).empty();
 }
 
+function submitResults() {
+  deleteElementsFromParent("#answer-buttons");
+  addButtons("#answer-buttons", 1)
+  $("#button1").attr("onclick", "startGame()").text("Play Again?");
+}
 
 // Testing Grounds!!!
-
+function displayResults() {
+  deleteElementsFromParent("#answer-buttons");
+  $(".answer-score").hide();
+  $("#question").hide();
+  $("#answer-buttons").text("Times Up! Here is your score: " + questionsAnsweredCorrectly);
+  addButtons("#answer-buttons", 1)
+  $("#button1").attr("onclick", "submitResults()").text("Submit Your Score!");
+}
 // Testing Grounds!!!
 
+function startGame() {
+  $("#start-game").hide();
+  startTimer(5);
+  currentQuestion = {};
+  selectQuestion();
+  displayQuestion("#question");
+  addButtons("#answer-buttons", 5);
+  displayButtons("#button", 5);
+  setAnswerValues("#button", 5)
+}
 
-// TODO: Fix timer penalty on wrong answer click
-$("button").on("click", function() {
+function switchQuestion() {
+  deleteElementsFromParent("#answer-buttons");
+  grabNextQuestion();
+  displayQuestion("#question");
+  addButtons("#answer-buttons", 5);
+  displayButtons("#button", 5);
+  setAnswerValues("#button", 5)
+}
+
+// This button checks values against the selected answer and either penalizes the user or moves on to the next question.
+$(document).on("click", "button" ,function() {
   let buttonValue = $(this).attr("value");
   if (timerCounter > 0 && buttonValue === "false") {
     timerCounter -= timerPenalty;
-    updatePageTimer();
+    updateElementText("#timer", timerCounter);
+  }
+  else if (timerCounter > 0 && buttonValue === "true") {
+    questionsAnsweredCorrectly++
+    updateElementText("#answer-counter", questionsAnsweredCorrectly);
+    if (myQuestions.length > 0) {
+      switchQuestion();
+    } else {
+      displayResults();
+      $("#timer").hide();
+    }
   }
 });
 
-function startGame() {
-
-  $(document).ready(function(){
-    $("#start-game").hide();
-    startTimer(30)
-    if (timerCounter > 0) {
-      selectQuestion();
-      displayQuestion("#question")
-      addButtons("#answer-buttons", 5)
-      displayAnswerButtons("#button", 5)
-      
-      
-      // deleteElementsFromParent("#answer-buttons");
-      // addButtons("#answer-buttons", 5);
-    }   
-  });
-}
-
-// When game starts
-
-// All these things happen in tandem
-  // timer starts
-  // random question added to current question
-  // question is displayed in element
-  // answer buttons created
-  // answers appended to button
-  // values added to button
-
-// If user clicks wrong button, timer penalty
-// If user guesses right
-  // destroy answer buttons
-  // destroy question element
-  // current question moved to selected questions array and current question cleared
-  // random question added to current question
-  // question is displayed in element
-  // answer buttons created
-  // answers appended to button 
-  // values added to button
-
-// Repeat until time runs out
-
-// TODO: control start button through js. show button after game.
