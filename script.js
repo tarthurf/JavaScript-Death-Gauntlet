@@ -85,7 +85,7 @@ function deleteElementsFromParent(parentEl) {
 function submitResults() {
   deleteElementsFromParent("#answer-buttons");
   addButtons("#answer-buttons", 1)
-  $("#button1").attr("onclick", "startGame()").text("Play Again?");
+  $("#button1").attr("onclick", "restartGame()").text("Play Again?");
 }
 
 // Testing Grounds!!!
@@ -101,13 +101,17 @@ function displayResults() {
 
 function startGame() {
   $("#start-game").hide();
-  startTimer(5);
+  startTimer(30);
   currentQuestion = {};
   selectQuestion();
   displayQuestion("#question");
   addButtons("#answer-buttons", 5);
   displayButtons("#button", 5);
   setAnswerValues("#button", 5)
+}
+
+function restartGame() {
+  window.location.reload()
 }
 
 function switchQuestion() {
